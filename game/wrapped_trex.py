@@ -183,7 +183,8 @@ class GameState:
 
         self.gamespeed = 4
         self.ground = Ground(-1*self.gamespeed)
-        self.score = self.counter = 0
+        self.score = 0
+        self.counter = 0
 
 
     def frame_step(self, input_actions):
@@ -246,13 +247,16 @@ class GameState:
         self.clouds.update()
         self.ground.update()
 
-        if self.dino.score > 25:
-            reward = 1
 
 
         if self.dino.isDead:
             terminal = True
             self.__init__()
+            reward = -1
+        else:
+            reward = self.dino.score * 0.1
+
+
 
         screen.fill(background_col)
         self.ground.draw()
