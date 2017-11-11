@@ -183,7 +183,8 @@ class GameState:
 
         self.gamespeed = 4
         self.ground = Ground(-1*self.gamespeed)
-        self.score = self.counter = 0
+        self.score = 0
+        self.counter = 0
 
 
     def frame_step(self, input_actions):
@@ -212,13 +213,14 @@ class GameState:
             c.movement[0] = -1*self.gamespeed
             if pygame.sprite.collide_mask(self.dino, c):
                 self.dino.isDead = True
-                reward = -10
 
         for p in self.pteras:
             p.movement[0] = -1*self.gamespeed
             if pygame.sprite.collide_mask(self.dino, p):
                 self.dino.isDead = True
-                reward = -10
+
+            #if not pygame.sprite.collide_mask(self.dino, p):
+            #    reward = 1
 
         if len(self.cacti) < 2:
             if len(self.cacti) == 0:
@@ -246,13 +248,14 @@ class GameState:
         self.clouds.update()
         self.ground.update()
 
-        if self.dino.score > 25:
-            reward = 1
-
 
         if self.dino.isDead:
             terminal = True
             self.__init__()
+            reward = -1
+
+        if not self.dino.isDead:
+            reward = self.dino.score * 0.1
 
         screen.fill(background_col)
         self.ground.draw()
