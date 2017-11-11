@@ -1,3 +1,18 @@
+## Course Title
+
+A hands-on tutorial on Deep Reinforcement Learning
+
+## Course Introduction
+
+This is a very short yet informative tutorial on deep reinforcement learning. This course aims to get students started at writing deep reinforcement learning agent to solve real-world problem. This course will be delivered by Dex and not affilated by any organisations or university. You are welcome to drop by and listen and write your own agent.
+
+If most feedback are positive and some can follow up, Dex may consider open an optional course at next semester.
+
+## Time & Location
+
+Time: TBA
+Location: TBA
+
 ## teaching timeline
 
 | durartion(min) | content                     |
