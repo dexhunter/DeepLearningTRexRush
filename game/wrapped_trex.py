@@ -1,8 +1,8 @@
-import numpy as np
-import sys
 import pygame
 import random
 from trex_utils import *
+import os
+
 
 FPS = 60
 scr_size = (width, height) = (600, 150)
@@ -12,7 +12,11 @@ background_col = (235,235,235)
 
 pygame.init()
 FPSCLOCK = pygame.time.Clock()
-screen = pygame.display.set_mode(scr_size)
+try:
+    screen = pygame.display.set_mode(scr_size)
+except pygame.error:
+    os.environ["SDL_VIDEODRIVER"] = "dummy"
+    screen = pygame.display.set_mode(scr_size)
 pygame.display.set_caption('T-Rex Rush')
 
 class Dino():
