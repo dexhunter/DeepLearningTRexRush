@@ -13,3 +13,8 @@
     * 自备笔记本电脑
 * 开源地址：
     https://github.com/DexHunter/DeepLearningTRexRush/tree/teaching-material
+
+
+## 宣传语
+
+随着AlphaGo赢得世界围棋冠军，深度强化学习成为一个热门话题，特别是在中国。这次我们邀请了大三的Dex学长来讲解「如何用Python写一个深度强化学习的代理来玩Chrome离线模式的恐龙小游戏」，Dex在深度强化学习领域有一篇论文。如果你对深度强化学习是如何在代码层面上实现的感兴趣，可以来参加这次课程。如果你等不及的话，也可以参考Dex开源的地址[1]。

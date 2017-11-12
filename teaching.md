@@ -75,3 +75,8 @@ end for
 The assignment of this tutorial is to build a deep reinforcement learning agent to play a video game. You do not need to hand code a game using pygame. You can try use `gym/env` from OpenAI.
 
 You can submit your assignment to *dex@stellarcoder.com*
+
+## Additional Introduction for SA-Office
+
+With AlphaGo winning the world championship, Deep Reinforcement Learning has become a hot topic, especially in China. This time we invited a Year 3 Student Dex who has co-authored a pepar on the field. If you want to know how to write code to implement deep reinforcement leraning agents, you are welcome to this lecture. If you cannot wait to the lecture, you can check this repo[1].
+
