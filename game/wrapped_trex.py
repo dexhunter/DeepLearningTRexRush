@@ -202,16 +202,16 @@ class GameState:
 
         # input_actions[0] == 1: do nothing
         # input_actions[1] == 1: jump
-        # input_actions[2] == 1: duck
+        # input_actions[2] == 1: duck # removed according to http://cs229.stanford.edu/proj2016/report/KeZhaoWei-AIForChromeOfflineDinosaurGame-report.pdf
 
         if input_actions[1] == 1:
             if self.dino.rect.bottom == int(0.98*height) and not self.dino.isDucking:
                 self.dino.isJumping = True
                 self.dino.movement[1] = -1*self.dino.jumpSpeed
 
-        if input_actions[2] == 1:
-            if not self.dino.isJumping:
-                self.dino.isDucking = True
+        #if input_actions[2] == 1:
+        #    if not self.dino.isJumping:
+        #        self.dino.isDucking = True
 
         for c in self.cacti:
             c.movement[0] = -1*self.gamespeed
