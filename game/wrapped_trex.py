@@ -1,18 +1,24 @@
-import numpy as np
-import sys
 import pygame
 import random
 from trex_utils import *
+import os
+
 
 FPS = 60
 scr_size = (width, height) = (600, 150)
 gravity = 0.6
 
+high_score = 0
+
 background_col = (235,235,235)
 
 pygame.init()
 FPSCLOCK = pygame.time.Clock()
-screen = pygame.display.set_mode(scr_size)
+try:
+    screen = pygame.display.set_mode(scr_size)
+except pygame.error:
+    os.environ["SDL_VIDEODRIVER"] = "dummy"
+    screen = pygame.display.set_mode(scr_size)
 pygame.display.set_caption('T-Rex Rush')
 
 class Dino():
@@ -168,6 +174,33 @@ class Cloud(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.kill()
 
+class Scoreboard():
+    def __init__(self,x=-1,y=-1):
+        self.score = 0
+        self.tempimages,self.temprect = load_sprite_sheet('numbers.png',12,1,11,int(11*6/5),-1)
+        self.image = pygame.Surface((55,int(11*6/5)))
+        self.rect = self.image.get_rect()
+        if x == -1:
+            self.rect.left = width*0.89
+        else:
+            self.rect.left = x
+        if y == -1:
+            self.rect.top = height*0.1
+        else:
+            self.rect.top = y
+
+    def draw(self):
+        screen.blit(self.image,self.rect)
+
+    def update(self,score):
+        score_digits = extractDigits(score)
+        self.image.fill(background_col)
+        for s in score_digits:
+            self.image.blit(self.tempimages[s],self.temprect)
+            self.temprect.left += self.temprect.width
+        self.temprect.left = 0
+
+
 
 class GameState:
     def __init__(self):
@@ -183,8 +216,19 @@ class GameState:
 
         self.gamespeed = 4
         self.ground = Ground(-1*self.gamespeed)
-        self.score = 0
         self.counter = 0
+        self.scb = Scoreboard()
+        self.highsc = Scoreboard(width*0.78)
+
+        temp_images,temp_rect = load_sprite_sheet('numbers.png',12,1,11,int(11*6/5),-1)
+        self.HI_image = pygame.Surface((22,int(11*6/5)))
+        self.HI_rect = self.HI_image.get_rect()
+        self.HI_image.fill(background_col)
+        self.HI_image.blit(temp_images[10],temp_rect)
+        temp_rect.left += temp_rect.width
+        self.HI_image.blit(temp_images[11],temp_rect)
+        self.HI_rect.top = height*0.1
+        self.HI_rect.left = width*0.73
 
 
     def frame_step(self, input_actions):
@@ -198,16 +242,16 @@ class GameState:
 
         # input_actions[0] == 1: do nothing
         # input_actions[1] == 1: jump
-        # input_actions[2] == 1: duck
+        # input_actions[2] == 1: duck # removed according to http://cs229.stanford.edu/proj2016/report/KeZhaoWei-AIForChromeOfflineDinosaurGame-report.pdf
 
         if input_actions[1] == 1:
             if self.dino.rect.bottom == int(0.98*height) and not self.dino.isDucking:
                 self.dino.isJumping = True
                 self.dino.movement[1] = -1*self.dino.jumpSpeed
 
-        if input_actions[2] == 1:
-            if not self.dino.isJumping:
-                self.dino.isDucking = True
+        #if input_actions[2] == 1:
+        #    if not self.dino.isJumping:
+        #        self.dino.isDucking = True
 
         for c in self.cacti:
             c.movement[0] = -1*self.gamespeed
@@ -218,9 +262,6 @@ class GameState:
             p.movement[0] = -1*self.gamespeed
             if pygame.sprite.collide_mask(self.dino, p):
                 self.dino.isDead = True
-
-            #if not pygame.sprite.collide_mask(self.dino, p):
-            #    reward = 1
 
         if len(self.cacti) < 2:
             if len(self.cacti) == 0:
@@ -247,19 +288,24 @@ class GameState:
         self.pteras.update()
         self.clouds.update()
         self.ground.update()
-
+        self.scb.update(self.dino.score)
+        self.highsc.update(high_score)
 
         if self.dino.isDead:
             terminal = True
+            if self.dino.score > high_score:
+                global high_score
+                high_score = self.dino.score
             self.__init__()
             reward = -1
-
-        if not self.dino.isDead:
-            reward = self.dino.score * 0.1
 
         screen.fill(background_col)
         self.ground.draw()
         self.clouds.draw(screen)
+        self.scb.draw()
+        if high_score != 0:
+            self.highsc.draw()
+            screen.blit(self.HI_image, self.HI_rect)
         self.cacti.draw(screen)
         self.pteras.draw(screen)
         self.dino.draw()
