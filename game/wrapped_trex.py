@@ -217,13 +217,11 @@ class GameState:
             c.movement[0] = -1*self.gamespeed
             if pygame.sprite.collide_mask(self.dino, c):
                 self.dino.isDead = True
-                reward = -10
 
         for p in self.pteras:
             p.movement[0] = -1*self.gamespeed
             if pygame.sprite.collide_mask(self.dino, p):
                 self.dino.isDead = True
-                reward = -10
 
         if len(self.cacti) < 2:
             if len(self.cacti) == 0:
@@ -256,9 +254,9 @@ class GameState:
         if self.dino.isDead:
             terminal = True
             self.__init__()
-            reward = -1
-        else:
-            reward = self.dino.score * 0.1
+            reward = -100
+        #else:
+        #    reward = self.dino.score * 0.1
 
 
 
