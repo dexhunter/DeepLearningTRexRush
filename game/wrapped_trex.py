@@ -8,6 +8,8 @@ FPS = 60
 scr_size = (width, height) = (600, 150)
 gravity = 0.6
 
+high_score = 0
+
 background_col = (235,235,235)
 
 pygame.init()
@@ -172,6 +174,33 @@ class Cloud(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.kill()
 
+class Scoreboard():
+    def __init__(self,x=-1,y=-1):
+        self.score = 0
+        self.tempimages,self.temprect = load_sprite_sheet('numbers.png',12,1,11,int(11*6/5),-1)
+        self.image = pygame.Surface((55,int(11*6/5)))
+        self.rect = self.image.get_rect()
+        if x == -1:
+            self.rect.left = width*0.89
+        else:
+            self.rect.left = x
+        if y == -1:
+            self.rect.top = height*0.1
+        else:
+            self.rect.top = y
+
+    def draw(self):
+        screen.blit(self.image,self.rect)
+
+    def update(self,score):
+        score_digits = extractDigits(score)
+        self.image.fill(background_col)
+        for s in score_digits:
+            self.image.blit(self.tempimages[s],self.temprect)
+            self.temprect.left += self.temprect.width
+        self.temprect.left = 0
+
+
 
 class GameState:
     def __init__(self):
@@ -187,8 +216,19 @@ class GameState:
 
         self.gamespeed = 4
         self.ground = Ground(-1*self.gamespeed)
-        self.score = 0
         self.counter = 0
+        self.scb = Scoreboard()
+        self.highsc = Scoreboard(width*0.78)
+
+        temp_images,temp_rect = load_sprite_sheet('numbers.png',12,1,11,int(11*6/5),-1)
+        self.HI_image = pygame.Surface((22,int(11*6/5)))
+        self.HI_rect = self.HI_image.get_rect()
+        self.HI_image.fill(background_col)
+        self.HI_image.blit(temp_images[10],temp_rect)
+        temp_rect.left += temp_rect.width
+        self.HI_image.blit(temp_images[11],temp_rect)
+        self.HI_rect.top = height*0.1
+        self.HI_rect.left = width*0.73
 
 
     def frame_step(self, input_actions):
@@ -248,11 +288,16 @@ class GameState:
         self.pteras.update()
         self.clouds.update()
         self.ground.update()
+        self.scb.update(self.dino.score)
+        self.highsc.update(high_score)
 
 
 
         if self.dino.isDead:
             terminal = True
+            if self.dino.score > high_score:
+                global high_score
+                high_score = self.dino.score
             self.__init__()
             reward = -100
         #else:
@@ -263,6 +308,10 @@ class GameState:
         screen.fill(background_col)
         self.ground.draw()
         self.clouds.draw(screen)
+        self.scb.draw()
+        if high_score != 0:
+            self.highsc.draw()
+            screen.blit(self.HI_image, self.HI_rect)
         self.cacti.draw(screen)
         self.pteras.draw(screen)
         self.dino.draw()
