@@ -290,11 +290,7 @@ class GameState:
         self.ground.update()
         self.scb.update(self.dino.score)
         self.highsc.update(high_score)
-<<<<<<< HEAD
-=======
 
-
->>>>>>> master
 
         if self.dino.isDead:
             terminal = True
@@ -302,15 +298,11 @@ class GameState:
                 global high_score
                 high_score = self.dino.score
             self.__init__()
-<<<<<<< HEAD
-            reward = -1
-=======
             reward = -100
         #else:
         #    reward = self.dino.score * 0.1
 
 
->>>>>>> master
 
         screen.fill(background_col)
         self.ground.draw()
