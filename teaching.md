@@ -10,8 +10,8 @@ If most feedback are positive and some can follow up, Dex may consider open an o
 
 ## Time & Location
 
-Time: TBA
-Location: TBA
+Time: Nov. 16th (Thu) 19:30
+Location: SD 354
 
 ## teaching timeline
 
@@ -48,6 +48,8 @@ contact a person briefly (especially electronically).
 Key idea: Learning by interaction.
 
 Unlike supervised learning, where we explicitly instructs machine what to do. In reinforcement leanring, we evaluates the actions based on rewards we get by interacting with environment (observation).
+
+See [more](https://www.zybuluo.com/xdx24/note/951614)
 
 ### How does Deep Q-Network Work?
 
