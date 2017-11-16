@@ -49,7 +49,21 @@ Key idea: Learning by interaction.
 
 Unlike supervised learning, where we explicitly instructs machine what to do. In reinforcement leanring, we evaluates the actions based on rewards we get by interacting with environment (observation).
 
-See [more](https://www.zybuluo.com/xdx24/note/951614)
+See [more](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/MDP.pdf)
+
+#### What are the differences between RL & supervised learning & unsupervised learning?
+
+* RL: trying to maximize a reward signal
+* unsupervised learning: trying to find hidden structure in collections of unlabeled data
+* supervised learning: learning from a training set of labeled examples provided by a knowledgeable external supervisor
+
+#### Elements of Reinforcement Learning
+
+* *policy*: a mapping from perceived **states** of the environments to **actions** to be taken when in those states
+* *reward signal*: immediate gain/loss
+* *value function*: long-term reward (accumulate in the future), also what we try to optimize
+* (optionally) *model* of the environment: predict the resultant next state and next reward, used for *planning*(def: any way of deciding on a course of action by considering possible future situations before they are actually experienced)
+
 
 ### How does Deep Q-Network Work?
 
