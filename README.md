@@ -6,7 +6,7 @@
 * Install dependencies `pip install -r requirements.txt`
 * Run `python deep_q_network.py`
 
-Notice: If you want to train on your own from scratch, comment [this line](deep_q_network.py#L108) and uncomment the line above.
+Notice: If you want to train on your own from scratch, comment [this line](deep_q_network.py#L108) and uncomment the line above. (Currently there is no pre-trained model)
 
 ## Dependencies
 
