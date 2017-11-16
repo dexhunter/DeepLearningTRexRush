@@ -25,3 +25,10 @@
 * [youtube video by David Silver](https://www.youtube.com/watch?v=2pWv7GOvuf0&list=PLzuuYNsE1EZAXYR4FJ75jcJseBmo4KQ9-)
 * [ppt by David Silver](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html)
 * [John Schulmann](https://www.youtube.com/watch?v=oPGVsoBonLM)
+
+## Things I wish I used when I started programming
+
+* Vim
+* Z Shell
+* ssh
+* Arch
